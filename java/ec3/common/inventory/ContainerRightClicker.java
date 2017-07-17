@@ -19,9 +19,15 @@ public class ContainerRightClicker extends Container {
 	public ContainerRightClicker(InventoryPlayer par1InventoryPlayer, TileEntity par2) {
 		inv = (IInventory)par2;
 		addSlotToContainer(new SlotBoundEssence(inv, 0, 26, 41));
+
 		
 		if(par2.getBlockMetadata() == 0 || par2.getBlockMetadata() == 1) {
-			addSlotToContainer(new SlotGeneric(inv, 1, 80, 24, Items.stick.getIconFromDamage(0)));
+			if(par1InventoryPlayer.player.worldObj.isRemote){
+				addSlotToContainer(new SlotGeneric(inv, 1, 80, 24));
+			}
+			else{
+				addSlotToContainer(new SlotGeneric(inv, 1, 80, 24, Items.stick.getIconFromDamage(0)));
+			}
 			sizeInventory = 3;
 		}
 		else {
@@ -30,7 +36,14 @@ public class ContainerRightClicker extends Container {
 			}
 			sizeInventory = 11;
 		}
-		addSlotToContainer(new SlotGeneric(inv, 10, 156, 4, Items.dye.getIconFromDamage(8)));
+
+		if(par1InventoryPlayer.player.worldObj.isRemote){
+			addSlotToContainer(new SlotGeneric(inv, 10, 156, 4));
+		}
+		else{
+			addSlotToContainer(new SlotGeneric(inv, 10, 156, 4, Items.dye.getIconFromDamage(8)));
+		}
+
 		int i;
 		
 		for(i = 0; i < 3; ++i) {
